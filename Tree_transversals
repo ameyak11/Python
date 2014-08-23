@@ -1,0 +1,139 @@
+# Tree.py
+# Code to create a binary tree and display it in preorder postorder and inorder traversals 
+class node:				#Class for node
+	def __init__(self,val):
+		self.info=val
+		self.left=None
+		self.right=None
+		
+		
+	def __str__(self):
+		return str(self.info)
+
+class searchtree:			#Class for tree
+	def __init__(self):
+		self.root=None
+		
+	def create(self,val):
+		
+		if self.root==None:
+			self.root=node(val)
+		else:
+			current=self.root
+			while(1):
+				ch=raw_input("Enter 1 for left/2 for right"+" of "+current.info+"\n")
+				if ch=='1':
+					if current.left:
+						current=current.left
+					else:
+						current.left=node(val)
+						break
+						
+				elif ch=='2':
+					if current.right:
+						current=current.right	
+					else:
+						current.right=node(val)
+						break							
+						
+				else:
+					break
+	def display(self):
+		current=self.root
+		print "The tree is : "
+		while (current is not None):
+			
+			if current.left:
+				print current.info
+				current=current.left
+			else:
+				print current.info
+				current=current.right 
+	
+	
+	def inorder(self,node):			#Inorder recursive
+		if node is not None:
+			self.inorder(node.left)
+			print node.info
+			self.inorder(node.right)
+
+	def inorder1(self,curr):		#inorder nonrecursive
+		stck=[]
+		current=self.root
+		while (1):
+			while current:
+				stck.append(current)
+				current=current.left
+			if len(stck)>0:
+				current=stck.pop()
+				print current.info
+				current=current.right
+			else:
+				break
+	def preorder(self,node):		#preorder recursive
+		if node is not None:
+			print node.info
+			self.preorder(node.left)
+			self.preorder(node.right)
+	
+	def preorder1(self,node):		#preorder non recursive
+		stck=[]
+		current=self.root
+		
+		while current:
+			print current.info
+			stck.append(current)
+			current=current.left
+		while len(stck)>0:
+			current=stck.pop()
+			current=current.right
+			while current:
+				print current.info
+				stck.append(current)
+				current=current.left
+	
+	def postorder(self,node):		#postorder recursive
+		if node is not None:
+			self.postorder(node.left)
+			self.postorder(node.right)
+			print node.info
+	
+	def postorder1(self,node):		# postorder non recursive
+		stck=[]		
+		current=self.root
+		while current:
+			stck.append(current)
+			current=current.left
+			if len(stck)>0:
+				temp=stck[len(stck)-1]			
+				if temp.right==None:
+					print temp.info
+					current=stck.pop()
+				else:
+					stck.append(temp.right)				
+					current=stck.pop()				
+				
+			
+
+search=searchtree()
+d=raw_input("Enter 1 to continue 2 to exit")
+while (d=='1'):
+	val = raw_input("Enter the data")
+	search.create(val)
+	d=2
+	d=raw_input("Enter 1 to continue 2 to exit")
+ch=raw_input("Enter your choice\n1.Inorder (recursive)\n2.Inorder nonrecursive\n3.Preorder recursive\n4.Preorder nonrecursive \n5.Post order recursive\n6. Postorder nonrecursive\n")
+if ch=='1':
+	search.inorder(search.root)
+elif ch=='2':
+	search.inorder1(search.root)
+elif ch=='3':
+	search.preorder(search.root)
+elif ch=='4':
+	search.preorder1(search.root)
+elif ch=='5':
+	search.postorder(search.root)
+elif ch=='6':
+	search.postorder1(search.root)
+
+		
